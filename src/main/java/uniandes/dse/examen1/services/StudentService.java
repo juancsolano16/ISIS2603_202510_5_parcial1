@@ -19,5 +19,18 @@ public class StudentService {
 
     public StudentEntity createStudent(StudentEntity newStudent) throws RepeatedStudentException {
         // TODO
+        if(newStudent.getName() == null){
+            throw new IllegalArgumentException("El estudiante debe tener un nombre");
+        }
+        else if(newStudent.getId() == null){
+            throw new IllegalArgumentException("El estudiante debe tener un ID");
+        }
+        else if(newStudent.getLogin() == null){
+            throw new IllegalArgumentException("El estudiante debe tener un login");
+        }
+        else if(studentRepository.findByLogin(newStudent.getLogin()) != null){
+            throw new IllegalArgumentException("El login ya existe");
+        }
+       return studentRepository.save(newStudent);
     }
 }

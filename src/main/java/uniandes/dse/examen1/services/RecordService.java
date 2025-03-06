@@ -28,8 +28,18 @@ public class RecordService {
     @Autowired
     RecordRepository recordRepository;
 
-    public RecordEntity createRecord(String loginStudent, String courseCode, Double grade, String semester)
-            throws InvalidRecordException {
+    public RecordEntity createRecord(String loginStudent, String courseCode, Double grade, String semester) throws InvalidRecordException {
         // TODO
+        if(studentRepository.findByLogin(loginStudent) == null){
+            throw new IllegalArgumentException("El login no existe");
+        }
+        else if(courseRepository.findByCourseCode(courseCode) == null){
+            throw new IllegalArgumentException("El curso no existe");
+        }
+        else if(1.5 > grade && grade > 5){
+            throw new IllegalArgumentException("El rango de la nota no es correcto");
+        }
+        Optional<StudentEntity> estudiante = studentRepository.findByLogin(loginStudent);
+        return recordRepository.save();
     }
 }

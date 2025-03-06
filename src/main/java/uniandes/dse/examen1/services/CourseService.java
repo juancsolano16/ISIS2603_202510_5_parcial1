@@ -19,5 +19,17 @@ public class CourseService {
 
     public CourseEntity createCourse(CourseEntity newCourse) throws RepeatedCourseException {
         // TODO
+        Long id = newCourse.getId();
+        if (id == null){
+            throw new IllegalArgumentException("El curso debe tener un ID asociado");
+        }
+        else if(newCourse.getName() == null){
+            throw new IllegalArgumentException("El curso debe tener un nombre");
+        }
+        else if (!courseRepository.findByCourseCode(id.toString()).equals(null)){
+            throw new IllegalArgumentException("El curso debe tener un codigo unico");
+        }
+        return courseRepository.save(newCourse);
+
     }
 }
